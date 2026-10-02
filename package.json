@@ -1,0 +1,58 @@
+{
+  "name": "pulsebar",
+  "version": "0.0.0",
+  "private": true,
+  "description": "A compact cross-platform system monitor for macOS and Windows.",
+  "main": "electron/main.cjs",
+  "author": "xiangzhong26",
+  "scripts": {
+    "dev": "concurrently -k \"vite\" \"wait-on tcp:5173 && electron . --dev\"",
+    "build": "vite build",
+    "screenshots": "electron electron/screenshots.cjs --no-sandbox",
+    "start": "electron .",
+    "dist": "npm run build && electron-builder --publish never",
+    "dist:mac": "npm run build && electron-builder --mac --publish never",
+    "dist:win": "npm run build && electron-builder --win --x64 --publish never"
+  },
+  "dependencies": {
+    "electron-store": "latest",
+    "systeminformation": "latest"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "latest",
+    "concurrently": "latest",
+    "electron": "latest",
+    "electron-builder": "latest",
+    "lucide-react": "latest",
+    "react": "latest",
+    "react-dom": "latest",
+    "vite": "latest",
+    "wait-on": "latest"
+  },
+  "build": {
+    "appId": "com.pulsebar.monitor",
+    "productName": "PulseBar",
+    "asar": true,
+    "compression": "maximum",
+    "electronLanguages": ["en", "zh_CN"],
+    "directories": {
+      "output": "release"
+    },
+    "files": [
+      "dist/**/*",
+      "electron/**/*",
+      "package.json"
+    ],
+    "mac": {
+      "category": "public.app-category.utilities",
+      "target": ["dmg", "zip"]
+    },
+    "win": {
+      "target": ["nsis", "portable"]
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true
+    }
+  }
+}
